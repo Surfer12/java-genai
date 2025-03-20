@@ -1,20 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.google.genai.TableTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.009 s <<< FAILURE! -- in com.google.genai.TableTest
-com.google.genai.TableTest.createTests -- Time elapsed: 0.006 s <<< ERROR!
-java.lang.IllegalArgumentException: Location must either be provided or set in the environment variable GOOGLE_CLOUD_LOCATION.
-	at com.google.genai.ApiClient.<init>(ApiClient.java:96)
-	at com.google.genai.HttpApiClient.<init>(HttpApiClient.java:43)
-	at com.google.genai.Client.<init>(Client.java:206)
-	at com.google.genai.Client$Builder.build(Client.java:57)
-	at com.google.genai.TableTest.createTests(TableTest.java:291)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-Caused by: java.lang.NullPointerException
-	at java.base/java.util.Objects.requireNonNull(Objects.java:220)
-	at java.base/java.util.Optional.of(Optional.java:113)
-	at com.google.genai.ApiClient.<init>(ApiClient.java:94)
-	... 7 more
-
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in com.google.genai.TableTest
