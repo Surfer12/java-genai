@@ -374,3 +374,131 @@ Apache 2.0 - See [LICENSE][license] for more information.
 [maven-version-link]: https://central.sonatype.com/artifact/com.google.genai/google-genai/0.1.0
 [license]: https://github.com/googleapis/java-genai/blob/main/LICENSE
 
+# Google Generative AI Java SDK - How To Guide
+
+## Prerequisites
+
+1. **Java Development Kit (JDK)**
+   - Ensure you have JDK 17 or later installed
+   - Verify with: `java --version`
+
+2. **Maven**
+   - Install Maven (if not already installed)
+   - Verify with: `mvn --version`
+
+3. **Google AI Studio API Key**
+   - Visit [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+   - Create a new API key
+
+## Setup
+
+### 1. Set Up API Key
+
+There are two ways to set your API key:
+
+#### Option A: Environment Variable
+```bash
+export GOOGLE_API_KEY=your_actual_api_key_here
+```
+
+#### Option B: In .env File
+Create or edit the `.env` file in the project root:
+```
+GOOGLE_API_KEY=your_actual_api_key_here
+```
+
+### 2. Project Structure
+
+The main file for generating content is typically located at:
+`src/main/java/com/google/genai/examples/GenerateContent.java`
+
+### 3. Compilation and Execution
+
+#### Compile the Project
+```bash
+mvn clean compile
+```
+
+#### Run the Project
+```bash
+# Option 1: Run with Maven
+mvn exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContent"
+
+# Option 2: Skip Tests (if needed)
+mvn clean compile exec:java -DskipTests -Dexec.mainClass="com.google.genai.examples.GenerateContent"
+```
+
+## Customizing Your Request
+
+In the `GenerateContent.java` file, modify the `generateContent()` method:
+
+```java
+// Basic request
+GenerateContentResponse response = 
+    client.models.generateContent("gemini-2.0-flash-001", "Your prompt here", null);
+
+// Example with more complex prompt
+GenerateContentResponse response = 
+    client.models.generateContent(
+        "gemini-2.0-flash-001", 
+        "Write a short poem about technology", 
+        null  // Optional parameters
+    );
+```
+
+## Troubleshooting
+
+1. **API Key Issues**
+   - Ensure your API key is correct
+   - Check that it's properly set in the environment or .env file
+   - Verify the key at [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+2. **Dependency Problems**
+   - Run `mvn dependency:resolve` to download all required dependencies
+   - Ensure you have an active internet connection
+
+3. **Java Version Compatibility**
+   - This project requires Java 17+
+   - Use `--release 17` flag if you encounter module-related warnings
+
+## Available Models
+
+Common model names include:
+- `gemini-2.0-flash-001`: Fast, lightweight model
+- `gemini-2.0-pro-001`: More advanced model for complex tasks
+
+## Best Practices
+
+- Always handle potential exceptions
+- Be mindful of API usage limits
+- Protect your API key (never commit it to version control)
+
+## Example Code Snippet
+
+```java
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
+
+public class GenerateContent {
+    public static void main(String[] args) throws Exception {
+        // Instantiate the client
+        Client client = new Client();
+
+        // Generate content
+        GenerateContentResponse response = 
+            client.models.generateContent(
+                "gemini-2.0-flash-001", 
+                "Explain quantum computing in simple terms", 
+                null
+            );
+
+        // Print the response
+        System.out.println("AI Response: " + response.text());
+    }
+}
+```
+
+## License
+
+This project is licensed under the Apache License 2.0. See the LICENSE file for details.
+
