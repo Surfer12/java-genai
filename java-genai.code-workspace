@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "java-genai",
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic",
+		"java.debug.settings.onBuildFailureProceed": true,
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}
