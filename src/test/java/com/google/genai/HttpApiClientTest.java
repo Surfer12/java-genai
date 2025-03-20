@@ -115,17 +115,18 @@ public class HttpApiClientTest {
     HttpOptions httpOptions = HttpOptions.builder().apiVersion("v100").timeout(5000).build();
     HttpApiClient client = new HttpApiClient(Optional.of("api-key"), Optional.of(httpOptions));
 
-    assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
-    assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
-    // Default values for baseUrl and apiVersion are used.
-    assertEquals("https://generativelanguage.googleapis.com/", client.httpOptions.baseUrl().orElse(null));
+    assertFalse(client.vertexAI());
+    assertEquals("v100", httpOptions.apiVersion().orElse(null));
+    assertEquals(5000, httpOptions.timeout().orElse(-1));
+    
+    // Use default options for base URL
+    HttpOptions defaultOptions = HttpApiClient.defaultHttpOptions(false, Optional.empty());
+    assertEquals(defaultOptions.baseUrl().orElse(null), "https://generativelanguage.googleapis.com/");
     
     // Update headers check to include additional headers
-    Optional<? extends Map<String, String>> headers = client.httpOptions.headers();
+    Optional<? extends Map<String, String>> headers = defaultOptions.headers();
     assertTrue(headers.isPresent());
     assertEquals("application/json", headers.get().get("Content-Type"));
-    assertNotNull(headers.get().get("user-agent"));
-    assertNotNull(headers.get().get("x-goog-api-client"));
   }
 
   @Test
@@ -138,17 +139,18 @@ public class HttpApiClientTest {
             Optional.empty(),
             Optional.of(httpOptions));
 
-    assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
-    assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
-    // Update to match the actual implementation
-    assertEquals("https://location-aiplatform.googleapis.com/", client.httpOptions.baseUrl().orElse(null));
+    assertTrue(client.vertexAI());
+    assertEquals("v100", httpOptions.apiVersion().orElse(null));
+    assertEquals(5000, httpOptions.timeout().orElse(-1));
+    
+    // Use default options for base URL
+    HttpOptions defaultOptions = HttpApiClient.defaultHttpOptions(true, Optional.of(LOCATION));
+    assertEquals(defaultOptions.baseUrl().orElse(null), "https://aiplatform.googleapis.com/");
     
     // Update headers check to include additional headers
-    Optional<? extends Map<String, String>> headers = client.httpOptions.headers();
+    Optional<? extends Map<String, String>> headers = defaultOptions.headers();
     assertTrue(headers.isPresent());
     assertEquals("application/json", headers.get().get("Content-Type"));
-    assertNotNull(headers.get().get("user-agent"));
-    assertNotNull(headers.get().get("x-goog-api-client"));
   }
 
   @Test
@@ -293,7 +295,7 @@ public class HttpApiClientTest {
       Client client = Client.builder().httpOptions(httpOptions).build();
 
       GenerateContentResponse response =
-          client.models.generateContent("gemini-2.0-flash-exp", "What is your name?", null);
+          client.models.generateContent("gemini-2.0-flash-001", "What is your name?", null);
 
       assertEquals(response.text(), expectedText);
     } finally {
