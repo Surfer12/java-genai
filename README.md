@@ -637,6 +637,33 @@ I've created a comprehensive README.md that covers everything from setup to adva
 
 ### Key Steps to Compile and Send a Request
 
+Let me break down the command you've shared:
+
+1. `export GOOGLE_API_KEY=$(grep GOOGLE_API_KEY .env | cut -d '=' -f2)`:
+   - This part reads the API key from the `.env` file
+   - `grep GOOGLE_API_KEY .env`: Finds the line containing GOOGLE_API_KEY
+   - `cut -d '=' -f2`: Splits the line at '=' and takes the second part (the value)
+   - `export`: Sets the environment variable for the current shell session
+
+2. `&&`: Ensures the next command runs only if the previous command succeeds
+
+3. `mvn clean compile exec:java -DskipTests -Dexec.mainClass="com.google.genai.examples.GenerateContent"`:
+   - `clean`: Removes previous build artifacts
+   - `compile`: Compiles the source code
+   - `exec:java`: Executes the specified Java class
+   - `-DskipTests`: Skips running tests
+   - `-Dexec.mainClass`: Specifies the main class to run
+
+This is an efficient one-liner that:
+1. Extracts the API key from the `.env` file
+2. Sets it as an environment variable
+3. Compiles the project
+4. Runs the GenerateContent example without running tests
+
+Would you like me to explain any part of the command in more detail?
+
+
+
 1. **Prerequisites**:
    - Install JDK 17+
    - Install Maven
