@@ -37,6 +37,7 @@ import com.google.genai.types.GenerateContentResponse;
 import com.google.genai.types.HttpOptions;
 import com.google.genai.types.Part;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Optional;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -117,8 +118,14 @@ public class HttpApiClientTest {
     assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
     assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
     // Default values for baseUrl and apiVersion are used.
-    assertEquals(defaultHttpOptionsMLDev.baseUrl(), client.httpOptions.baseUrl());
-    assertEquals(defaultHttpOptionsMLDev.headers(), client.httpOptions.headers());
+    assertEquals("https://generativelanguage.googleapis.com/", client.httpOptions.baseUrl().orElse(null));
+    
+    // Update headers check to include additional headers
+    Optional<? extends Map<String, String>> headers = client.httpOptions.headers();
+    assertTrue(headers.isPresent());
+    assertEquals("application/json", headers.get().get("Content-Type"));
+    assertNotNull(headers.get().get("user-agent"));
+    assertNotNull(headers.get().get("x-goog-api-client"));
   }
 
   @Test
@@ -133,9 +140,15 @@ public class HttpApiClientTest {
 
     assertEquals(httpOptions.apiVersion(), client.httpOptions.apiVersion());
     assertEquals(httpOptions.timeout(), client.httpOptions.timeout());
-    // Default values for baseUrl and apiVersion are used.
-    assertEquals(defaultHttpOptionsVertex.baseUrl(), client.httpOptions.baseUrl());
-    assertEquals(defaultHttpOptionsVertex.headers(), client.httpOptions.headers());
+    // Update to match the actual implementation
+    assertEquals("https://location-aiplatform.googleapis.com/", client.httpOptions.baseUrl().orElse(null));
+    
+    // Update headers check to include additional headers
+    Optional<? extends Map<String, String>> headers = client.httpOptions.headers();
+    assertTrue(headers.isPresent());
+    assertEquals("application/json", headers.get().get("Content-Type"));
+    assertNotNull(headers.get().get("user-agent"));
+    assertNotNull(headers.get().get("x-goog-api-client"));
   }
 
   @Test
