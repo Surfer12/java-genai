@@ -314,6 +314,48 @@ public class GenerateContentWithSchema {
 }
 ```
 
+## API Key Setup
+
+### Securing Your API Key
+
+1. Obtain an API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Set the API key as an environment variable:
+
+   ```bash
+   # For macOS/Linux
+   export GOOGLE_API_KEY=your_actual_api_key
+   
+   # For Windows (PowerShell)
+   $env:GOOGLE_API_KEY="your_actual_api_key"
+   
+   # For Windows (Command Prompt)
+   set GOOGLE_API_KEY=your_actual_api_key
+   ```
+
+3. For Vertex AI, also set:
+   ```bash
+   export GOOGLE_CLOUD_PROJECT=your_project_id
+   export GOOGLE_CLOUD_LOCATION=your_location
+   export GOOGLE_GENAI_USE_VERTEXAI=true
+   ```
+
+### Best Practices
+
+- NEVER commit API keys to version control
+- Use environment variables or secure secret management
+- Rotate your API keys periodically
+- Restrict API key permissions to the minimum required
+
+### Using .env Files (Optional)
+
+If you prefer using a `.env` file:
+
+1. Copy `.env.example` to `.env`
+2. Add your API key to `.env`
+3. Use a library like `dotenv` to load environment variables
+
+**Warning:** Ensure `.env` is in your `.gitignore`
+
 ## Versioning
 
 This library follows [Semantic Versioning](http://semver.org/).

@@ -1,4 +1,3 @@
-
 # pixi environments
 .pixi
 *.egg-info
@@ -7,3 +6,36 @@
 
 # setenv.md
 setenv.md
+
+GenerateContent.java
+src/main/java/com/google/genai/ApiClient.java
+.gitignore
+src/main/java/com/google/genai/HttpApiClient.java
+src/main/java/com/google/genai/ApiClient.java
+src/main/java/com/google/genai/examples/GenerateContent.java
+setenv.md
+setenv.md
+
+# Ignore API key and environment files
+.env
+*.env
+api_key.txt
+secrets.json
+
+# Ignore sensitive configuration files
+**/setenv.md
+.env
+*.env
+secrets.txt
+api_key.txt
+**/GenerateContent.java
+
+# Ignore files with hardcoded credentials
+**/ApiClient.java
+**/HttpApiClient.java
+**/GenerateContent.java
+
+# Prevent accidental commits of sensitive source files
+src/main/java/com/google/genai/ApiClient.java
+src/main/java/com/google/genai/HttpApiClient.java
+src/main/java/com/google/genai/examples/GenerateContent.java

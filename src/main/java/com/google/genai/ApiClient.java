@@ -50,7 +50,7 @@ abstract class ApiClient {
       this.apiKey = Optional.of(apiKey.orElse(System.getenv("GOOGLE_API_KEY")));
     } catch (NullPointerException e) {
       throw new IllegalArgumentException(
-          "API key must either be provided or set in the environment variable" + " GOOGLE_API_KEY.",
+          "API key must either be provided or set in the environment variable GOOGLE_API_KEY.",
           e);
     }
 
@@ -79,7 +79,7 @@ abstract class ApiClient {
     checkNotNull(customHttpOptions, "customHttpOptions cannot be null");
 
     try {
-      this.project = Optional.of(project.orElse(System.getenv("GOOGLE_CLOUD_PROJECT")));
+      this.project = Optional.of(project.orElse(System.getProperty("GOOGLE_CLOUD_PROJECT")));
     } catch (NullPointerException e) {
       throw new IllegalArgumentException(
           "Project must either be provided or set in the environment variable"
@@ -91,11 +91,11 @@ abstract class ApiClient {
     }
 
     try {
-      this.location = Optional.of(location.orElse(System.getenv("GOOGLE_CLOUD_LOCATION")));
+      this.location = Optional.of(location.orElse(System.getProperty("GOOGLE_CLOUD_LOCATION")));
     } catch (NullPointerException e) {
       throw new IllegalArgumentException(
           "Location must either be provided or set in the environment variable"
-              + " GOOGLE_CLOUD_LOCATION.",
+              + " us-central1-c.",
           e);
     }
     if (this.location.get().isEmpty()) {

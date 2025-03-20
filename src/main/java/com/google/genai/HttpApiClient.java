@@ -61,7 +61,7 @@ final class HttpApiClient extends ApiClient {
       httpPost.setHeader(header.getKey(), header.getValue());
     }
     if (apiKey.isPresent()) {
-      httpPost.setHeader("x-goog-api-key", apiKey.get());
+      httpPost.setHeader("x-goog-api-key", System.getenv("GOOGLE_API_KEY"));
     } else {
       GoogleCredentials cred =
           credentials.orElseThrow(() -> new IllegalStateException("credentials is required"));

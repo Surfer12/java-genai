@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.google.genai.HttpApiClientTest
--------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.467 s -- in com.google.genai.HttpApiClientTest
