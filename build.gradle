@@ -1,13 +1,38 @@
-plugins {
-    id 'java'
+plugins { id 'java'
+ id 'application' }
+
+
+
+group = 'com.google.genai.examples'
+
+version = '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.google.genai.examples.GenerateContent'
 }
 
+
 repositories {
-    mavenCentral() // Add this line if it's not already present
+    mavenCentral()
+    maven {
+        name = "google-genai"
+        url = "https://dl.google.com/ai/vertexai/gems/maven/"
+    }
 }
 
 dependencies {
-    implementation("com.google.ai.generativeai:generativeai:0.4.2")
+    implementation 'com.google.cloud:google-cloud-vertexai:1.19.0'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+// Optional: Add dependency management to ensure compatibility
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.google.cloud') {
+                details.useVersion '26.56.0'
+            }
+        }
+    }
 }
