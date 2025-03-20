@@ -4,3 +4,6 @@
 *.egg-info
 # magic environments
 .magic
+
+# setenv.md
+setenv.md

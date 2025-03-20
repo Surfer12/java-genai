@@ -74,4 +74,27 @@ final class HttpApiClient extends ApiClient {
     HttpApiResponse httpApiResponse = new HttpApiResponse(httpClient.execute(httpPost));
     return httpApiResponse;
   }
+
+  /** Default HTTP options for ML Dev or Vertex AI */
+  public static HttpOptions defaultHttpOptions(boolean isVertexAI, Optional<String> location) {
+    HttpOptions.Builder builder = HttpOptions.builder();
+    
+    if (isVertexAI) {
+      builder.baseUrl("https://aiplatform.googleapis.com/")
+             .apiVersion("v1beta1");
+    } else {
+      builder.baseUrl("https://generativelanguage.googleapis.com/")
+             .apiVersion("v1beta");
+    }
+    
+    // Only add Content-Type header
+    builder.headers(ImmutableMap.of("Content-Type", "application/json"));
+    
+    return builder.build();
+  }
+
+  /** Check if this is a Vertex AI client */
+  public boolean vertexAI() {
+    return this.project.isPresent() && this.location.isPresent();
+  }
 }

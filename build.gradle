@@ -11,6 +11,12 @@ application {
     mainClass = 'com.google.genai.examples.GenerateContent'
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 
 repositories {
     mavenCentral()
@@ -21,18 +27,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.cloud:google-cloud-vertexai:1.19.0'
+    // Main Google GenAI SDK
+    implementation 'com.google.genai:google-genai:0.1.0'
+    
+    // HTTP and JSON utilities
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'com.google.code.gson:gson:2.10.1'
-}
-
-// Optional: Add dependency management to ensure compatibility
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.google.cloud') {
-                details.useVersion '26.56.0'
-            }
-        }
-    }
+    
+    // WebSocket dependencies
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    
+    // Google common libraries
+    implementation 'com.google.api:api-common:2.15.0'
+    implementation 'com.google.auto.value:auto-value-annotations:1.10.1'
+    annotationProcessor 'com.google.auto.value:auto-value:1.10.1'
+    
+    // JSR-305 and JSpecify annotations
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'org.jspecify:jspecify:0.3.0'
 }
