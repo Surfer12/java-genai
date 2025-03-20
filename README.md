@@ -703,3 +703,44 @@ Would you like me to explain any part of the command in more detail?
 The README provides detailed explanations for each step, troubleshooting tips, and best practices.
 
 Would you like me to elaborate on any part of the guide or show you how to modify the request to ask different questions?
+
+
+I'll update the README.md to include this specific command:
+
+```markdown:README.md
+### 3. Compilation and Execution
+
+#### Compile the Project
+```bash
+mvn clean compile
+```
+
+#### Run the Project
+```bash
+# Option 1: Run with Maven
+mvn exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContent"
+
+# Option 2: Skip Tests (if needed)
+mvn clean compile exec:java -DskipTests -Dexec.mainClass="com.google.genai.examples.GenerateContent"
+
+# Option 3: One-Liner (Recommended): Extract API Key and Run
+export GOOGLE_API_KEY=$(grep GOOGLE_API_KEY .env | cut -d '=' -f2) && mvn clean compile exec:java -DskipTests -Dexec.mainClass="com.google.genai.examples.GenerateContent"
+```
+
+#### Understanding the One-Liner Command
+- `export GOOGLE_API_KEY=$(grep GOOGLE_API_KEY .env | cut -d '=' -f2)`: 
+  - Extracts the API key from the `.env` file
+  - Sets it as an environment variable
+- `&&`: Ensures the Maven command runs only if API key extraction succeeds
+- `mvn clean compile exec:java -DskipTests -Dexec.mainClass="com.google.genai.examples.GenerateContent"`: 
+  - Cleans previous builds
+  - Compiles the project
+  - Runs the main class
+  - Skips tests
+```
+I've added the one-liner command to the README.md with a detailed explanation of how it works. The new section provides:
+1. The exact command
+2. A breakdown of what each part of the command does
+3. An explanation of why this is an efficient way to run the project
+
+Is there anything else you'd like me to add or modify in the README?
