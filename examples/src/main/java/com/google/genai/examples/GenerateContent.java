@@ -35,24 +35,39 @@
  *
  * <p>mvn clean compile exec:java -Dexec.mainClass="com.google.genai.examples.GenerateContent"
  */
-package com.google.genai.examples;
-
-import com.google.genai.Client;
-import com.google.genai.types.GenerateContentResponse;
-import java.io.IOException;
-import org.apache.http.HttpException;
-
-/** An example of using the Unified Gen AI Java SDK to generate content. */
 public class GenerateContent {
+  // Environment configuration
+  private static final String GOOGLE_API_KEY = System.getenv("GOOGLE_API_KEY");
+  private static final String GOOGLE_CLOUD_PROJECT = System.getenv("GOOGLE_CLOUD_PROJECT");
+  private static final String GOOGLE_CLOUD_LOCATION = System.getenv("GOOGLE_CLOUD_LOCATION");
+  private static final boolean GOOGLE_GENAI_USE_VERTEXAI =
+      Boolean.parseBoolean(System.getenv().getOrDefault("GOOGLE_GENAI_USE_VERTEXAI", "false"));
+
+  /**
+   * Main method to generate content using the GenAI SDK.
+   *
+   * @param args Command line arguments (not used).
+   * @throws IOException If an I/O error occurs.
+   * @throws HttpException If an HTTP error occurs.
+   */
   public static void main(String[] args) throws IOException, HttpException {
-    // Instantiate the client. The client by default uses the Gemini Developer API. It gets the API
-    // key from the environment variable `GOOGLE_API_KEY`.
-    Client client = new Client();
+    // Validate required environment variables
+    if (GOOGLE_API_KEY == null || GOOGLE_API_KEY.isEmpty()) {
+      throw new IllegalArgumentException("GOOGLE_API_KEY environment variable must be set");
+    }
 
-    GenerateContentResponse response =
-        client.models.generateContent("gemini-2.0-flash-001", "What is your name?", null);
+    try {
+      // Instantiate the GenAiService
+      GenAiService genAiService = new GenAiService();
 
-    // Gets the text string from the response by the quick accessor method `text()`.
-    System.out.println("Unary response: " + response.text());
+      GenerateContentResponse response =
+          genAiService.generateContent("gemini-2.0-flash-001", "What is your name?", null);
+
+      // Gets the text string from the response by the quick accessor method `text()`.
+      System.out.println("Unary response: " + response.text());
+    } catch (Exception e) {
+      System.err.println("Error details:");
+      e.printStackTrace();
+    }
   }
 }
